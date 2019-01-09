@@ -1,0 +1,6 @@
+-> Fix maze checking for obstacles; make sure we don't pass through them
+-> create maze class to store mazes
+-> create maze solver class that can read in a valid maze
+-> create method for maze solver that will allow for us to read in a maze
+-> extend to ascii graphics maze; use + for walking spaces, use %, &, $ and such characters for obstacles
+-> add color to maze solver for printing
