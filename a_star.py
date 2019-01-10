@@ -1,7 +1,18 @@
 #!/usr/bin/env python3
 
-class Node:
 
+class Maze_Solver:
+
+    ''' A class for solving mazes '''
+    def __init__(self, maze,  start, end):
+        self.maze = maze
+        self.start = start
+        self.end = end
+
+
+class Node:
+    
+    ''' A representation of a single position '''
     def __init__(self, parent=None, pos=None):
         self.parent = parent
         self.pos = pos
@@ -11,7 +22,9 @@ class Node:
     def __eq__(self, other):
         return self.pos == other.pos
 
+
 def in_range(node_pos, maze):
+    ''' Check to see if tile is valid '''
     if node_pos[0] > (len(maze) - 1) or node_pos[0] < 0 or node_pos[1] > (len(maze[len(maze) - 1]) - 1) or node_pos[1] < 0:
         return False
     if maze[node_pos[0]][node_pos[1]] == 1:
@@ -19,6 +32,7 @@ def in_range(node_pos, maze):
     return True
 
 def generate_children(curr, maze):
+    ''' Return list of possible steps '''
     children = []
     for newpos in curr.new_pos:
         node_pos = (curr.pos[0] + newpos[0], curr.pos[1] + newpos[1])
@@ -30,26 +44,31 @@ def generate_children(curr, maze):
     return children
 
 def heuristic(curr, child, goal_node):
+    ''' Calculate traversal cost from g + h '''
     child.g = curr.g + 1
     child.h = (abs(goal_node.pos[0]-child.pos[0]) + abs(goal_node.pos[1]-child.pos[1]))
     child.f = child.g + child.h
     child.parent = curr
 
 def get_lowest_node(open_list):
+    ''' Return open node with the lowest cost '''
     open_list.sort(key=lambda x: x.f)
     a = open_list.pop(0)
     return a
 
 def is_goal(n, goal):
+    ''' Check to see if we are at the goal '''
     if n == goal:
         path = []
         while n is not None:
-            path.append(n)
+            path.append(n.pos)
             n = n.parent
         path.reverse()
         return path
 
 def a_star(maze, start, goal):
+    ''' Perform A* search for the goal '''
+    # initialization 
     start_node = Node(None, start)
     goal_node = Node(None, goal)
 
@@ -59,23 +78,23 @@ def a_star(maze, start, goal):
     open_list.append(start_node)
     curr_succ_cost = 0
     n = start_node
+
+    # main search loop
     while open_list:
         # pop lowest node from open list
         n = get_lowest_node(open_list)
         
-        # generate children
+        # generate children of node n
         children = generate_children(n, maze)
-
-        if n == goal_node:
-            path = []
-            while n is not None:
-                path.append(n.pos)
-                n = n.parent
-            path.reverse()
+        
+        # return path if goal has been reached
+        path = is_goal(n, goal_node)
+        if path:
             return path
-
+        
+        # compare each child
         for child in children:
-
+    
             # set child variables f, g, h
             heuristic(n, child, goal_node)
 
