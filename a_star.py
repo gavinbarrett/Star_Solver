@@ -128,11 +128,29 @@ def main():
             [1, 0, 1]
             ]
 
+    yellow = '\033[93m'
+    white = '\33[97m'
+    red = '\u001b[31;1m'
+
     start = (0, 0)
-    goal = (2, 3)
-    path = a_star(maze3, start, goal)
+    goal = (5, 4)
+    path = a_star(maze2, start, goal)
     if path:
+        b = 0
+        tst = []
         print(path)
+        print('')
+        for i in range(0, len(maze2)):
+            for j in range(0, len(maze2)):
+                tst.append(i)
+                tst.append(j)
+                if tuple(tst) in path:
+                    print(red + str(maze2[i][j]) + ' ' + white , end='')
+                else:
+                    print(str(maze2[i][j]) + ' ', end='')
+                tst = []
+            print('')
+
     else:
         print('Goal could not be reached!')
 
