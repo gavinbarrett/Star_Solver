@@ -91,9 +91,6 @@ def a_star(maze, start, goal):
             else:
                 open_list.append(child)
         closed_list.append(n)
-    if n != goal_node:
-        raise RuntimeError('goal cannot be reached!')
-
 
 def main():
     maze1 = [
@@ -120,8 +117,8 @@ def main():
 
     maze3 = [
             [0, 0, 1, 1],
-            [1, 0, 0, 0],
-            [1, 1, 0, 0],
+            [1, 0, 1, 0],
+            [1, 1, 1, 0],
             [1, 1, 1, 0]
             ]
 
@@ -132,8 +129,11 @@ def main():
             ]
 
     start = (0, 0)
-    goal = (0, 8)
-    path = a_star(maze1, start, goal)
-    print(path)
+    goal = (2, 3)
+    path = a_star(maze3, start, goal)
+    if path:
+        print(path)
+    else:
+        print('Goal could not be reached!')
 
 main()
