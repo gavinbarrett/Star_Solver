@@ -14,7 +14,7 @@ class Node:
 def in_range(node_pos, maze):
     if node_pos[0] > (len(maze) - 1) or node_pos[0] < 0 or node_pos[1] > (len(maze[len(maze) - 1]) - 1) or node_pos[1] < 0:
         return False
-    if maze[node_pos[0]][node_pos[1]] != 0:
+    if maze[node_pos[0]][node_pos[1]] == 1:
         return False
     return True
 
@@ -29,18 +29,25 @@ def generate_children(curr, maze):
 
     return children
 
-
-def eval_function(curr, child, goal_node):
+def heuristic(curr, child, goal_node):
     child.g = curr.g + 1
-    child.h = (((child.pos[0] - goal_node.pos[0]) ** 2) + ((child.pos[1] - goal_node.pos[1]) ** 2))
+    child.h = (abs(goal_node.pos[0]-child.pos[0]) + abs(goal_node.pos[1]-child.pos[1]))
     child.f = child.g + child.h
-    return child.f
-    
+    child.parent = curr
 
 def get_lowest_node(open_list):
+    open_list.sort(key=lambda x: x.f)
     a = open_list.pop(0)
     return a
 
+def is_goal(n, goal):
+    if n == goal:
+        path = []
+        while n is not None:
+            path.append(n)
+            n = n.parent
+        path.reverse()
+        return path
 
 def a_star(maze, start, goal):
     start_node = Node(None, start)
@@ -53,7 +60,12 @@ def a_star(maze, start, goal):
     curr_succ_cost = 0
     n = start_node
     while open_list:
+        # pop lowest node from open list
         n = get_lowest_node(open_list)
+        
+        # generate children
+        children = generate_children(n, maze)
+
         if n == goal_node:
             path = []
             while n is not None:
@@ -61,28 +73,31 @@ def a_star(maze, start, goal):
                 n = n.parent
             path.reverse()
             return path
-        children = generate_children(n, maze)
+
         for child in children:
+
+            # set child variables f, g, h
+            heuristic(n, child, goal_node)
+
             if child in open_list:
-                if child.g <= curr_succ_cost:
+                if child.g > curr_succ_cost:
                     continue
+            
             elif child in closed_list:
-                if child.g <= curr_succ_cost:
+                if child.g > curr_succ_cost:
                     continue
-                closed_list.pop(closed_list.index(child))
-                open_list.append(child)
+                else:
+                    open_list.append(child)
             else:
                 open_list.append(child)
-                curr_succ_cost = eval_function(n, child, goal_node)
-            child.g = curr_succ_cost
-            child.parent = n
         closed_list.append(n)
     if n != goal_node:
         raise RuntimeError('goal cannot be reached!')
 
 
 def main():
-    maze1 = [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    maze1 = [
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
@@ -91,16 +106,33 @@ def main():
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ]
 
-    maze2 = [[0, 1, 1, 0, 0, 1],
+    maze2 = [
+            [0, 1, 1, 0, 0, 1],
             [0, 0, 0, 1, 1, 0],
             [0, 0, 0, 1, 0, 0],
             [1, 1, 0, 1, 1, 0],
             [1, 0, 0, 0, 0, 1],
-            [1, 0, 1, 1, 0, 1]]
+            [1, 0, 1, 1, 0, 1]
+            ]
+
+    maze3 = [
+            [0, 0, 1, 1],
+            [1, 0, 0, 0],
+            [1, 1, 0, 0],
+            [1, 1, 1, 0]
+            ]
+
+    maze4 = [
+            [0, 1, 1],
+            [1, 0, 1],
+            [1, 0, 1]
+            ]
+
     start = (0, 0)
-    goal = (8,9)
+    goal = (0, 8)
     path = a_star(maze1, start, goal)
     print(path)
 
