@@ -23,7 +23,7 @@ class Maze_Solver:
         self.start = tuple(map(int, start.split(',')))
         self.goal = tuple(map(int, goal.split(',')))
         
-    
+
     def print_solved(self, path):
         ''' Print solved maze '''
         if path:
@@ -33,9 +33,12 @@ class Maze_Solver:
                     tup.append(i)
                     tup.append(j)
                     if tuple(tup) in path:
-                        print(colors.red + str(self.reader.maze[i][j]) + ' ' + colors.white , end='')
+                        print(colors.blue + '*' + ' ' + colors.white , end='')
                     else:
-                        print(str(self.reader.maze[i][j]) + ' ', end='')
+                        if self.reader.maze[i][j] == 1:
+                            print(colors.green + '%' + ' ' + colors.white, end='')
+                        else:
+                            print(colors.white + '+' + ' ', end='')
                     tup = []
                 print('')
         else:
@@ -131,49 +134,16 @@ class Maze_Solver:
                     open_list.append(child)
             closed_list.append(n)
 
+
 def main():
-    maze1 = [
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            ]
-
-    maze2 = [
-            [0, 1, 1, 0, 0, 1],
-            [0, 0, 0, 1, 1, 0],
-            [0, 0, 0, 1, 0, 0],
-            [1, 1, 0, 1, 1, 0],
-            [1, 0, 0, 0, 0, 1],
-            [1, 0, 1, 1, 0, 1]
-            ]
-
-    maze3 = [
-            [0, 0, 1, 1],
-            [1, 0, 1, 0],
-            [1, 1, 1, 0],
-            [1, 1, 1, 0]
-            ]
-
-    maze4 = [
-            [0, 1, 1],
-            [1, 0, 1],
-            [1, 0, 1]
-            ]
-
-    start = (0, 0)
-    goal = (5, 4)
     
-    MSolver = Maze_Solver(sys.argv[1], sys.argv[2], sys.argv[3])
+    # Create a Solver that reads in the maze
+    ms = Maze_Solver(sys.argv[1], sys.argv[2], sys.argv[3])
     
-    path = MSolver.a_star()
+    # Return path if one exists
+    path = ms.a_star()
     
-    MSolver.print_solved(path)
+    # Print path
+    ms.print_solved(path)
 
 main()
