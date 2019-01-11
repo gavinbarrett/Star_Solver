@@ -33,12 +33,12 @@ class Maze_Solver:
                     tup.append(i)
                     tup.append(j)
                     if tuple(tup) in path:
-                        print(colors.blue + '*' + ' ' + colors.white , end='')
+                        print(colors.blue + '0' + ' ' + colors.white , end='')
                     else:
                         if self.reader.maze[i][j] == 1:
-                            print(colors.green + '%' + ' ' + colors.white, end='')
+                            print(colors.green + '1' + ' ' + colors.white, end='')
                         else:
-                            print(colors.white + '+' + ' ', end='')
+                            print(colors.white + '0' + ' ', end='')
                     tup = []
                 print('')
         else:
