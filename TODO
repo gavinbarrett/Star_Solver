@@ -1,3 +1,2 @@
 -> extend to ascii graphics maze; use + for walking spaces, use %, &, $ and such characters for obstacles
-
--> create maze file generator
+-> print usage upon when passed incorrect args 
