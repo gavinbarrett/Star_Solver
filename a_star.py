@@ -28,18 +28,7 @@ class Maze_Solver:
         ''' Print solved maze '''
         if path:
             tup = []
-            print('  ', end='')
-            for a in range(0, len(self.reader.maze)):
-                if a < 10:
-                    print(a, end=' ')
-                else:
-                    print(a, end='')
-            print('')
             for i in range(0, len(self.reader.maze)):
-                if i < 10:
-                    print(i, end=' ')
-                else:
-                    print(i, end='')
                 for j in range(0, len(self.reader.maze)):
                     tup.append(i)
                     tup.append(j)

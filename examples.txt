@@ -1,0 +1,4 @@
+./a_star.py tests/50x50.txt 0,0 35,31
+./a_star.py tests/50x50.txt 0,0 12,49 
+./a_star.py tests/50x50.txt 0,0 45,49
+./a_star.py tests/50x50.txt 0,0 48,12
