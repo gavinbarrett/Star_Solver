@@ -99,7 +99,6 @@ class Maze_Solver:
         closed_list = []
 
         open_list.append(start_node)
-        #FIXME: Should below be initialized to something else?
         curr_succ_cost = 0
 
         # main search loop
@@ -107,14 +106,14 @@ class Maze_Solver:
             # pop lowest node from open list
             n = self.get_lowest_node(open_list)
         
-            # generate children of node n
-            children = self.generate_children(n)
-        
             # return path if goal has been reached
             path = self.is_goal(n, goal_node)
             if path:
                 return path
-        
+
+            # generate children of node n
+            children = self.generate_children(n)
+
             # compare each child
             for child in children:
     
