@@ -1,6 +1,8 @@
 class colors:
-    yellow =  '\u001b[45m'
+    yellow1 = '\33[45m'
+    yellow2 =  '\u001b[33m'
     white = '\33[97m'
-    red =  '\u001b[41m'
+    red1 = '\33[41m'
+    red2 =  '\u001b[41m'
     green = '\033[92m'
     blue = '\033[94m'

@@ -74,7 +74,7 @@ class Maze_Solver:
         ''' Calculate traversal cost from g + h '''
         child.g = curr.g + 1
         child.h = (abs(goal_node.pos[0]-child.pos[0]) + abs(goal_node.pos[1]-child.pos[1]))
-        child.f = child.g + child.h
+        child.f = child.g #+ child.h uncomment to turn dijstra's into a_star
         child.parent = curr
 
     def get_lowest_node(self, open_list):
