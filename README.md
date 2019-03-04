@@ -16,12 +16,22 @@ x (Blue) - Expanded node not on the optimal path
 
 ./dijkstra.py tests/25x25.txt 0,0 20,23
 
-<img src="./Dijkstra_1.png" alt="Dijkstra"/>
+<img src="./Dijkstra_1.png" alt="Dijkstra1"/>
 
 As you can see, Dijkstra's algorithm expands virutally all tiles in the matrix, giving us a space complexity of ~O(n^2).
 
 ./a\_star.py tests/25x25.txt 0,0 20,23
 
-<img src="./A_star1.png" alt="A*"/>
+<img src="./A_star1.png" alt="A*1"/>
 
 A\*, on the other hand, expands an optimal amount of tiles.
+
+
+./dijkstra.py tests/25x25.txt 0,0 24,3
+
+<img src="./Dijkstra_2.png" alt="Dijkstra2"/>
+
+./a\_star.py tests/25x25.txt 0,0 24,3
+
+<img src="./A_star2.png" alt="A*2"/>
+
