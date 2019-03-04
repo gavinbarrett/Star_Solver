@@ -14,9 +14,13 @@ x (Blue) - Expanded node not on the optimal path
 
 . (White) - Open tile; traversable space
 
+./dijkstra.py tests/25x25.txt 0,0 20,23
+
 <img src="./Dijkstra_1.png" alt="Dijkstra"/>
 
 As you can see, Dijkstra's algorithm expands virutally all tiles in the matrix, giving us a space complexity of ~O(n^2).
+
+./a\_star.py tests/25x25.txt 0,0 20,23
 
 <img src="./A_star1.png" alt="A*"/>
 
